@@ -3,6 +3,8 @@ import { ActivityTypes, Bot, createBot, DiscordenoInteraction, DiscordenoUser, s
 import { BotWithCache, enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/discordeno_cache_plugin@0.0.21/mod.ts';
 import 'https://deno.land/x/dotenv@v3.2.0/load.ts';
 
+let showNovelty = true;
+
 async function getHDMFloorPrice(): Promise<string> {
     const response = await fetch('https://api-mainnet.magiceden.dev/v2/collections/hoteldementia/stats');
     const collectionStat = await response.json();
@@ -19,30 +21,19 @@ async function getHDMTheInvitationFloorPrice(): Promise<string> {
 
 async function setFloorPriceDiscordStatus(bot: Bot): Promise<void> {
     try {
-        const floorPrice = await getHDMFloorPrice();
-        const invitationFloorPrice = await getHDMTheInvitationFloorPrice();
-        console.log("CALLED");
+        const floorPrice = showNovelty ? await getHDMFloorPrice() : await getHDMTheInvitationFloorPrice();
+        const collectionName = showNovelty ? 'Novelty' : 'Invitation';
         bot.helpers.editBotStatus({
             status: 'online',
             activities: [
                 {
-                    type: ActivityTypes.Custom,
-                    name: `Novelty: ${floorPrice} ◎`,
-                    emoji: {
-                        name: 'woman_astronaut',
-                    },
+                    type: ActivityTypes.Watching,
+                    name: `${collectionName}: ${floorPrice} ◎`,
                     createdAt: new Date().getTime(),
                 },
-                // {
-                //     type: ActivityTypes.Custom,
-                //     name: `Invitation: ${invitationFloorPrice} ◎`,
-                //     emoji: {
-                //         name: 'luggage',
-                //     },
-                //     createdAt: new Date().getTime(),
-                // },
             ]
         });
+        showNovelty = !showNovelty;
     } catch (error) {
         console.error(error);
         return;
