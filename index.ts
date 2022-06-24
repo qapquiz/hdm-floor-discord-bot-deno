@@ -10,15 +10,28 @@ async function getHDMFloorPrice(): Promise<string> {
     return (collectionStat.floorPrice / 1e9).toString();
 }
 
+async function getHDMTheInvitationFloorPrice(): Promise<string> {
+    const response = await fetch('https://api-mainnet.magiceden.dev/v2/collections/hdmtheinvitation/stats');
+    const collectionStat = await response.json();
+
+    return (collectionStat.floorPrice / 1e9).toString();
+}
+
 async function setFloorPriceDiscordStatus(bot: Bot): Promise<void> {
     try {
         const floorPrice = await getHDMFloorPrice();
+        const invitationFloorPrice = await getHDMTheInvitationFloorPrice();
         bot.helpers.editBotStatus({
             status: 'online',
             activities: [
                 {
                     type: ActivityTypes.Watching,
                     name: `Novelty: ${floorPrice} ◎`,
+                    createdAt: new Date().getTime(),
+                },
+                {
+                    type: ActivityTypes.Watching,
+                    name: `Invitation: ${invitationFloorPrice}`,
                     createdAt: new Date().getTime(),
                 },
             ]
