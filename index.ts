@@ -25,13 +25,13 @@ async function setFloorPriceDiscordStatus(bot: Bot): Promise<void> {
             status: 'online',
             activities: [
                 {
-                    type: ActivityTypes.Watching,
+                    type: ActivityTypes.Custom,
                     name: `Novelty: ${floorPrice} ◎`,
                     createdAt: new Date().getTime(),
                 },
                 {
-                    type: ActivityTypes.Watching,
-                    name: `Invitation: ${invitationFloorPrice}`,
+                    type: ActivityTypes.Custom,
+                    name: `Invitation: ${invitationFloorPrice} ◎`,
                     createdAt: new Date().getTime(),
                 },
             ]
