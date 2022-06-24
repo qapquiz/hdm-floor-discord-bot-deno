@@ -1,4 +1,4 @@
-import { serve } from "https://deno.land/std/http/server.ts";
+import { serve } from "https://deno.land/std@0.139.0/http/server.ts";
 import { ActivityTypes, Bot, createBot, DiscordenoInteraction, DiscordenoUser, startBot } from 'https://deno.land/x/discordeno@13.0.0-rc18/mod.ts';
 import { BotWithCache, enableCachePlugin, enableCacheSweepers } from 'https://deno.land/x/discordeno_cache_plugin@0.0.21/mod.ts';
 import 'https://deno.land/x/dotenv@v3.2.0/load.ts';
@@ -27,11 +27,17 @@ async function setFloorPriceDiscordStatus(bot: Bot): Promise<void> {
                 {
                     type: ActivityTypes.Custom,
                     name: `Novelty: ${floorPrice} ◎`,
+                    emoji: {
+                        name: 'woman_astronaut',
+                    },
                     createdAt: new Date().getTime(),
                 },
                 {
                     type: ActivityTypes.Custom,
                     name: `Invitation: ${invitationFloorPrice} ◎`,
+                    emoji: {
+                        name: 'luggage',
+                    },
                     createdAt: new Date().getTime(),
                 },
             ]
