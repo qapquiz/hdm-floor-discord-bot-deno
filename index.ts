@@ -21,6 +21,7 @@ async function setFloorPriceDiscordStatus(bot: Bot): Promise<void> {
     try {
         const floorPrice = await getHDMFloorPrice();
         const invitationFloorPrice = await getHDMTheInvitationFloorPrice();
+        console.log("CALLED");
         bot.helpers.editBotStatus({
             status: 'online',
             activities: [
@@ -32,14 +33,14 @@ async function setFloorPriceDiscordStatus(bot: Bot): Promise<void> {
                     },
                     createdAt: new Date().getTime(),
                 },
-                {
-                    type: ActivityTypes.Custom,
-                    name: `Invitation: ${invitationFloorPrice} ◎`,
-                    emoji: {
-                        name: 'luggage',
-                    },
-                    createdAt: new Date().getTime(),
-                },
+                // {
+                //     type: ActivityTypes.Custom,
+                //     name: `Invitation: ${invitationFloorPrice} ◎`,
+                //     emoji: {
+                //         name: 'luggage',
+                //     },
+                //     createdAt: new Date().getTime(),
+                // },
             ]
         });
     } catch (error) {
